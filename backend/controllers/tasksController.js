@@ -4,7 +4,7 @@ let tasks = []
 module.exports={
     taskList :  async (req, res) => {
         try {
-            return res.json(tasks)
+            return res.send(tasks)
             return res.status(200).json({
                 ok : true,
                 msg :'Lista de Tareas'
@@ -14,6 +14,30 @@ module.exports={
             return res.status(error.status || 500).json({
                 ok : false,
                 msg : error.message || 'Upss, hubo un error al obtener la Lista de Tareas'
+            })
+        }
+    },
+    taskDetail: async (req, res) => {
+        try {
+            const {id} = req.params
+            console.log(id)
+            const task = tasks.find(task => task.id === parseInt(id))
+            if(!task) {
+                return res.status(404).json({
+                    ok: false,
+                    msg: "Tarea no encontrada"
+                })
+            }
+            return res.status(200).json({
+                ok : true,
+                msg :'Tarea encontrada',
+                task:task
+            })
+        } catch (error) {
+            console.log(error);
+            return res.status(error.status || 500).json({
+                ok : false,
+                msg : error.message || 'Upss, la tarea que buscas no existe'
             })
         }
     },

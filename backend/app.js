@@ -5,6 +5,14 @@ const cors = require('cors');
 const methodOverride = require('method-override');
 const logger = require('morgan');
 
+const corsOptions = {
+    origin: "*", // Cambia "*" por un dominio específico en producción para mayor seguridad
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"]
+  };
+  
+  app.use(cors(corsOptions));
+
 const PORT = process.env.PORT || 3000;
 
 /* necesraio para usar GET y POST */
